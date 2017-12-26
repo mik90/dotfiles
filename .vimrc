@@ -36,7 +36,6 @@ set guifont=Tlwg\ Typist\ Medium\ 12
 set mousemodel=popup
 set tabstop=4
 set shiftwidth=4
-set expandtab
 set backspace=indent,eol,start
 set ruler
 syntax on
