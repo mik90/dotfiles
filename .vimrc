@@ -42,3 +42,8 @@ set ruler
 if filereadable("/etc/vim/gvimrc.local")
   source /etc/vim/gvimrc.local
 endif
+
+augroup filetype                                                     
+   au BufRead,BufNewFile *.flex,*.jflex    set filetype=jflex         
+ augroup END                                                          
+ au Syntax jflex    so ~/.vim/syntax/jflex.vim
