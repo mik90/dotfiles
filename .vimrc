@@ -25,8 +25,11 @@ Plugin 'severin-lemaignan/vim-minimap'
 
 Plugin 'vim-ruby/vim-ruby'
 
+<<<<<<< HEAD
 Plugin 'vim-scripts/cup.vim'
 
+=======
+>>>>>>> da72bcc68dc04fb3e2a48daa52cca4d34dc23df8
 " All of your Plugins must be added before the following line
 
 call vundle#end()            " required
@@ -48,6 +51,7 @@ if filereadable("/etc/vim/gvimrc.local")
 endif
 
 augroup filetype                                                     
+<<<<<<< HEAD
 	au BufRead,BufNewFile *.flex,*.jflex    set filetype=jflex         
 augroup END                                                          
 au Syntax jflex    so ~/.vim/syntax/jflex.vim
@@ -56,3 +60,8 @@ augroup filetype
 	au BufRead,BufNewFile *.cup    set filetype=cup         
 augroup END                                                          
 au Syntax cup    so ~/.vim/syntax/cup.vim
+=======
+   au BufRead,BufNewFile *.flex,*.jflex    set filetype=jflex         
+ augroup END                                                          
+ au Syntax jflex    so ~/.vim/syntax/jflex.vim
+>>>>>>> da72bcc68dc04fb3e2a48daa52cca4d34dc23df8
