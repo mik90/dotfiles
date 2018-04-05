@@ -39,8 +39,16 @@ set tabstop=4
 set shiftwidth=4
 set backspace=indent,eol,start
 set ruler
+set number
+set relativenumber
 set cursorline 
+set noexpandtab
 highlight CursorLine cterm=none ctermbg=235
+
+autocmd filetype python setlocal noexpandtab 
+autocmd filetype ruby setlocal expandtab 
+autocmd filetype java setlocal expandtab 
+autocmd filetype cup setlocal expandtab 
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/gvimrc.local")
@@ -50,7 +58,9 @@ endif
 augroup filetype                                                     
 	au BufRead,BufNewFile *.flex,*.jflex    set filetype=jflex         
 augroup END                                                          
+au Syntax jflex    so ~/.vim/syntax/jflex.vim
 
 augroup filetype                                                     
 	au BufRead,BufNewFile *.cup    set filetype=cup         
 augroup END                                                          
+au Syntax cup    so ~/.vim/syntax/cup.vim
