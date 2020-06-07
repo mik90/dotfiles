@@ -23,9 +23,7 @@ Plugin 'rakr/vim-one'
 
 Plugin 'severin-lemaignan/vim-minimap'
 
-Plugin 'vim-ruby/vim-ruby'
-
-Plugin 'vim-scripts/cup.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
 
@@ -54,6 +52,13 @@ highlight CursorLine cterm=none ctermbg=235
 " Sourced from flazz/vim-colorschemes
 colorscheme Dark
 
+" Ctags/Ctrlp stuff
+" Create mappings
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+" Default to working directory
+let g:ctrlp_working_path_mode = 'ra'
+
 " Lctrl+n opens up NERD tree
 map <C-n> :NERDTreeToggle<CR>
 
@@ -62,9 +67,7 @@ let g:indentLine_leadingSpaceEnabled=1
 
 autocmd filetype makefile setlocal noexpandtab 
 autocmd filetype python setlocal expandtab 
-autocmd filetype ruby setlocal expandtab 
 autocmd filetype java setlocal expandtab 
-autocmd filetype cup setlocal expandtab 
 autocmd filetype cpp setlocal expandtab 
 
 " For C++17 Syntax checking
@@ -75,12 +78,3 @@ if filereadable("/etc/vim/gvimrc.local")
   source /etc/vim/gvimrc.local
 endif
 
-augroup filetype                                                     
-	au BufRead,BufNewFile *.flex,*.jflex    set filetype=jflex         
-augroup END                                                          
-au Syntax jflex    so ~/.vim/syntax/jflex.vim
-
-augroup filetype                                                     
-	au BufRead,BufNewFile *.cup    set filetype=cup         
-augroup END                                                          
-au Syntax cup    so ~/.vim/syntax/cup.vim
