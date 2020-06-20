@@ -69,6 +69,7 @@ autocmd filetype makefile setlocal noexpandtab
 autocmd filetype python setlocal expandtab 
 autocmd filetype java setlocal expandtab 
 autocmd filetype cpp setlocal expandtab 
+autocmd filetype markdown setlocal expandtab 
 
 " For C++17 Syntax checking
 let g:syntastic_cpp_compiler_options = '-std=c++17'
