@@ -7,7 +7,16 @@
     "workbench.colorTheme": "One Monokai",
     "workbench.iconTheme": "vscode-icons",
     "workbench.colorCustomizations": {
-        "statusBar.background": "#0e2f33",
+        "statusBar.background": "#000000",
         "statusBar.foreground": "#ffffff",
-    }
+        "editorLineNumber.foreground": "#a3a3a3",
+    },
+    "editor.tokenColorCustomizations": {
+        "[One Monokai]": {
+            "comments": "#00eb0c"
+        }
+    },
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.formatOnSave": true,
+    "editor.renderWhitespace": "all",
 }
