@@ -1,22 +1,55 @@
 {
     "editor.lineNumbers": "relative",
-    "python.pythonPath": "/usr/bin/python3",
     "window.titleBarStyle": "custom",
     "workbench.startupEditor": "newUntitledFile",
     "git.autofetch": true,
-    "workbench.colorTheme": "One Monokai",
+    "workbench.colorTheme": "Material Theme Darker High Contrast",
     "workbench.iconTheme": "vscode-icons",
     "workbench.colorCustomizations": {
         "statusBar.background": "#000000",
         "statusBar.foreground": "#ffffff",
         "editorLineNumber.foreground": "#a3a3a3",
+        "[Material Theme Darker High Contrast]": {
+            "activityBar.background": "#242424",
+            "activityBar.foreground": "#ffffff",
+            "gitlens.trailingLineForegroundColor": "#5a5a5a",
+        },
+        "[One Monokai]": {
+            "statusBar.background": "#000000",
+            "statusBar.foreground": "#ffffff",
+            "editorLineNumber.foreground": "#a3a3a3",
+        }
     },
     "editor.tokenColorCustomizations": {
+        "[Material Theme Darker High Contrast]": {
+            "comments": "#00eb0c",
+            "textMateRules": [
+                {
+                    "scope": "string.quoted.docstring.multi.python",
+                    "settings": {
+                        "foreground": "#00d0df",
+                    }
+                }
+            ]
+        },
         "[One Monokai]": {
             "comments": "#00eb0c"
         }
     },
     "editor.defaultFormatter": "xaver.clang-format",
-    "editor.formatOnSave": true,
     "editor.renderWhitespace": "all",
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "cmake.configureEnvironment": {
+        "PATH" : "$PATH:/home/mike/.local/bin"
+    },
+    "cmake.parallelJobs": 24,
+    "update.mode": "manual",
+    "explorer.confirmDragAndDrop": false,
+    "editor.formatOnSave": true,
+    "discord.silent": true,
+    "editor.tabSize": 2,
+    "clang-format.language.proto.enable": false,
+    "git.suggestSmartCommit": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "clang-tidy.executable": "clang-tidy-9",
 }

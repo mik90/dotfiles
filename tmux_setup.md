@@ -1,3 +1,2 @@
 ### Notes
-- Uses https://github.com/samoshkin/tmux-config
-- Added as submodule in this repo
+- Uses https://github.com/gpakosz/.tmux as a base
