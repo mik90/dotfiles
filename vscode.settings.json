@@ -52,4 +52,7 @@
     "git.suggestSmartCommit": false,
     "vsicons.dontShowNewVersionMessage": true,
     "clang-tidy.executable": "clang-tidy-9",
+    "rust-client.engine": "rust-analyzer",
+    "rust.jobs": 10,
+    "window.zoomLevel": 2,
 }
