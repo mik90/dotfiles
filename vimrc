@@ -47,6 +47,7 @@ set ruler
 set number
 set relativenumber
 set noexpandtab
+set nohlsearch
 highlight CursorLine cterm=none ctermbg=235
 
 " Sourced from flazz/vim-colorschemes
