@@ -67,14 +67,12 @@ let g:indentLine_leadingSpaceChar='·'
 let g:indentLine_leadingSpaceEnabled=1
 
 autocmd filetype makefile setlocal noexpandtab 
-autocmd filetype python setlocal expandtab 
-autocmd filetype python setlocal tabstop=4 
-autocmd filetype python setlocal softtabstop=4 
-autocmd filetype python setlocal shiftwidth=4 
+autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
 autocmd filetype java setlocal expandtab 
-autocmd filetype cpp setlocal expandtab 
+autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
 autocmd filetype markdown setlocal expandtab 
 autocmd filetype sh setlocal expandtab 
+autocmd filetype cmake setlocal expandtab 
 
 " For C++17 Syntax checking
 let g:syntastic_cpp_compiler_options = '-std=c++17'
