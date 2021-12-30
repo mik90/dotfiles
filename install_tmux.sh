@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
-cd
+pushd ~
 git clone https://github.com/gpakosz/.tmux.git
 ln -s -f .tmux/.tmux.conf
-cp .tmux/.tmux.conf.local .
+popd
+# Expects to be in the dotfiles repo
+ln -sv $PWD/tmux.conf.local ~/.tmux.conf.local
+
