@@ -54,19 +54,21 @@
   
   services.flatpak.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services = {
+    xserver = {
+      enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      videoDrivers = [ "nvidia" ];
+      layout = "us";
+      libinput.enable = true;
+    };
 
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  # Configure keymap in X11
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
+    # https://gvolpe.com/blog/gnome3-on-nixos/
+    # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
+    dbus.packages = [ pkgs.gnome3.dconf ];
+    udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -75,9 +77,6 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mike = {
@@ -94,29 +93,60 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
     neovim
     git
     python3Full
     gcc
+    binutils-unwrapped
     clang
     clang-tools
-    obsidian
     rustup
-    haskellPackages.ghcup
     vscode
     bitwarden
     wget
     firefox
   ];
+  environment.variables.EDITOR = "nvim"; 
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   programs.mtr.enable = true;
+
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
+  programs.neovim = {
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    configure = {
+      customRC = ''
+      set shiftwidth=2
+      set softtabstop=2
+      set backspace=indent,eol,start
+      set ruler
+      set number
+      set relativenumber
+      set noexpandtab
+      set nohlsearch
+      
+      highlight CursorLine cterm=none ctermbg=235
+      let g:indentLine_leadingSpaceChar='·'
+      let g:indentLine_leadingSpaceEnabled=1
+
+      autocmd filetype makefile setlocal noexpandtab 
+      autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
+      autocmd filetype java setlocal expandtab 
+      autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
+      autocmd filetype markdown setlocal expandtab 
+      autocmd filetype sh setlocal expandtab 
+      autocmd filetype cmake setlocal expandtab 
+    '';
+    packages.nix.start = with pkgs.vimPlugins; [ vim-nix indentLine ];
+    };
+
+  };
+
 
   # List services that you want to enable:
 
