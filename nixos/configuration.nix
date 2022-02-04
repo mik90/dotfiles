@@ -8,8 +8,15 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos> 
     ];
   nixpkgs.config.allowUnfree = true;
+
+  users.users.eve.isNormalUser = true;
+  home-manager.users.mike = { pkgs, ... }: {
+    home.packages = [  ]; # e.g. pkgs.atool pkgs.httpie
+    programs.bash.enable = true;
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -105,6 +112,7 @@
     bitwarden
     wget
     firefox
+    home-manager
   ];
   environment.variables.EDITOR = "nvim"; 
 
