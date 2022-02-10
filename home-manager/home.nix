@@ -19,6 +19,7 @@
 
   home.packages = [
     pkgs.htop
+    pkgs.nixpkgs-fmt
   ];
 
   programs.git = {

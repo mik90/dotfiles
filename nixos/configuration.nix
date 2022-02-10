@@ -1,20 +1,17 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos> 
+      <home-manager/nixos>
     ];
   nixpkgs.config.allowUnfree = true;
 
   users.users.eve.isNormalUser = true;
   home-manager.users.mike = { pkgs, ... }: {
-    home.packages = [  ]; # e.g. pkgs.atool pkgs.httpie
+    home.packages = [ ]; # e.g. pkgs.atool pkgs.httpie
     programs.bash.enable = true;
   };
 
@@ -29,15 +26,18 @@
       configurationLimit = 4;
       useOSProber = true;
     };
-    systemd-boot = { 
+    systemd-boot = {
       enable = true;
     };
   };
+  # Unsure if this overides boot.kernelModules in hardware-configuration.nix entirely or just appends to it
+  boot.kernelModules = [
+    "iwlwifi"
+    "kvm-amd"
+  ];
 
 
-  networking.hostName = "nixos"; # Define your hostname.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # Set your time zone.
+  networking.hostName = "nixos";
   time.timeZone = "America/New_York";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -48,17 +48,13 @@
   networking.interfaces.enp6s0.useDHCP = true;
   networking.interfaces.wlp5s0.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
-  
+
   services.flatpak.enable = true;
 
   services = {
@@ -79,21 +75,20 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  
+
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mike = {
     isNormalUser = true;
     home = "/home/mike";
     description = "Mike Kaliman";
-    extraGroups = [ 
-        "wheel"
-        "dailout"
-        "networkmanager"
+    extraGroups = [
+      "wheel"
+      "dailout"
+      "networkmanager"
     ];
   };
 
@@ -110,11 +105,12 @@
     rustup
     vscode
     bitwarden
+    pciutils
     wget
     firefox
     home-manager
   ];
-  environment.variables.EDITOR = "nvim"; 
+  environment.variables.EDITOR = "nvim";
 
   programs.mtr.enable = true;
 
@@ -128,44 +124,36 @@
     viAlias = true;
     vimAlias = true;
     configure = {
+      # TODO: Get this rc to work
       customRC = ''
-      set shiftwidth=2
-      set softtabstop=2
-      set backspace=indent,eol,start
-      set ruler
-      set number
-      set relativenumber
-      set noexpandtab
-      set nohlsearch
+        set shiftwidth=2
+        set softtabstop=2
+        set backspace=indent,eol,start
+        set ruler
+        set number
+        set relativenumber
+        set noexpandtab
+        set nohlsearch
       
-      highlight CursorLine cterm=none ctermbg=235
-      let g:indentLine_leadingSpaceChar='·'
-      let g:indentLine_leadingSpaceEnabled=1
+        highlight CursorLine cterm=none ctermbg=235
+        let g:indentLine_leadingSpaceChar='·'
+        let g:indentLine_leadingSpaceEnabled=1
 
-      autocmd filetype makefile setlocal noexpandtab 
-      autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
-      autocmd filetype java setlocal expandtab 
-      autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
-      autocmd filetype markdown setlocal expandtab 
-      autocmd filetype sh setlocal expandtab 
-      autocmd filetype cmake setlocal expandtab 
-    '';
-    packages.nix.start = with pkgs.vimPlugins; [ vim-nix indentLine ];
+        autocmd filetype makefile setlocal noexpandtab 
+        autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
+        autocmd filetype java setlocal expandtab 
+        autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
+        autocmd filetype markdown setlocal expandtab 
+        autocmd filetype sh setlocal expandtab 
+        autocmd filetype cmake setlocal expandtab 
+      '';
+      packages.nix.start = with pkgs.vimPlugins; [ vim-nix indentLine ];
     };
 
   };
 
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
