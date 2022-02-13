@@ -36,6 +36,63 @@
     "kvm-amd"
   ];
 
+  # TODO
+  # May need this in order to get LHS monitor working in GDM
+  # https://discourse.nixos.org/t/gdm-monitor-configuration/6356
+  /*
+    systemd.tmpfiles.rules = [
+    "L+ /run/gdm/.config/monitors.xml - - - - ${pkgs.writeText "gdm-monitors.xml" ''
+    <!-- this should all be copied from your ~/.config/monitors.xml -->
+    <monitors version="2">
+    <configuration>
+    <!-- REDACTED -->
+    </configuration>
+    </monitors>
+    ''}"
+    ];
+  */
+  # Working xrandr output:
+  /*
+    Screen 0: minimum 8 x 8, current 7680 x 2160, maximum 32767 x 32767
+    DVI-D-0 disconnected (normal left inverted right x axis y axis)
+    HDMI-0 connected 3840x2160+0+0 (normal left inverted right x axis y axis) 621mm x 341mm
+    3840x2160     60.00*+  59.94    50.00    29.97    25.00    23.98  
+    2560x1440     59.95  
+    1920x1080     60.00    59.94    50.00    23.98  
+    1680x1050     59.95  
+    1440x900      59.89  
+    1440x576      50.00  
+    1440x480      59.94  
+    1280x1024     60.02  
+    1280x960      60.00  
+    1280x800      59.81  
+    1280x720      60.00    59.94    50.00  
+    1024x768      60.00  
+    800x600       60.32    56.25  
+    720x576       50.00  
+    720x480       59.94  
+    640x480       59.94    59.93  
+    DP-0 disconnected (normal left inverted right x axis y axis)
+    DP-1 disconnected (normal left inverted right x axis y axis)
+    HDMI-1 connected primary 3840x2160+3840+0 (normal left inverted right x axis y axis) 621mm x 341mm
+    3840x2160     60.00*+  59.94    50.00    29.97    25.00    23.98  
+    2560x1440     59.95  
+    1920x1080     60.00    59.94    50.00    23.98  
+    1680x1050     59.95  
+    1440x900      59.89  
+    1440x576      50.00  
+    1440x480      59.94  
+    1280x1024     60.02  
+    1280x960      60.00  
+    1280x800      59.81  
+    1280x720      60.00    59.94    50.00  
+    1024x768      60.00  
+    800x600       60.32    56.25  
+    720x576       50.00  
+    720x480       59.94  
+    640x480       59.94    59.93  
+  */
+
 
   networking.hostName = "nixos";
   time.timeZone = "America/New_York";
@@ -46,7 +103,8 @@
   networking.useDHCP = false;
   networking.interfaces.enp12s0f3u2u1i5.useDHCP = true;
   networking.interfaces.enp6s0.useDHCP = true;
-  networking.interfaces.wlp5s0.useDHCP = true;
+  # This takes forever to start during boot and i dont even need wifi
+  #networking.interfaces.wlp5s0.useDHCP = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -56,6 +114,7 @@
   };
 
   services.flatpak.enable = true;
+  services.openssh.enable = true;
 
   services = {
     xserver = {
@@ -153,7 +212,6 @@
   };
 
 
-  services.openssh.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
