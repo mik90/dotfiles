@@ -101,10 +101,7 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp12s0f3u2u1i5.useDHCP = true;
-  networking.interfaces.enp6s0.useDHCP = true;
-  # This takes forever to start during boot and i dont even need wifi
-  #networking.interfaces.wlp5s0.useDHCP = true;
+  networking.networkmanager.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
