@@ -18,6 +18,8 @@ Clear old boot entries `sudo nix-collect-garbage --delete-older-than 14d`
 
 Update boot entry with `sudo nixos-rebuild boot`
 
+Format manually with `nixpkgs-fmt`
+
 ## home-manager/
 
 Nix home manager <https://nix-community.github.io/home-manager/index.html>

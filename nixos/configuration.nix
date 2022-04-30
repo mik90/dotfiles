@@ -36,21 +36,49 @@
     "kvm-amd"
   ];
 
-  # TODO
-  # May need this in order to get LHS monitor working in GDM
+  # Attempts to address slow network startup
+  # Source: https://majiehong.com/post/2021-07-30_slow_nixos_startup/
+  systemd.services.NetworkManager-wait-onlnie.enable = false;
+
+  # I'm able to just use the monitor i care about for GDM by settings the gdm config
   # https://discourse.nixos.org/t/gdm-monitor-configuration/6356
-  /*
-    systemd.tmpfiles.rules = [
+  systemd.tmpfiles.rules = [
     "L+ /run/gdm/.config/monitors.xml - - - - ${pkgs.writeText "gdm-monitors.xml" ''
-    <!-- this should all be copied from your ~/.config/monitors.xml -->
-    <monitors version="2">
-    <configuration>
-    <!-- REDACTED -->
-    </configuration>
-    </monitors>
+      <!-- this should all be copied from your ~/.config/monitors.xml -->
+      <monitors version="2">
+        <configuration>
+          <logicalmonitor>
+            <x>0</x>
+            <y>0</y>
+            <scale>1</scale>
+            <primary>yes</primary>
+            <monitor>
+              <monitorspec>
+                <connector>HDMI-1</connector>
+                <vendor>AUS</vendor>
+                <product>ASUS VG289</product>
+                <serial>0x00018498</serial>
+              </monitorspec>
+              <mode>
+                <width>3840</width>
+                <height>2160</height>
+                <rate>59.996623992919922</rate>
+              </mode>
+            </monitor>
+          </logicalmonitor>
+          <disabled>
+            <!-- This is the problematic 'extra' monitor that isn't working as expected in gdm -->
+            <monitorspec>
+              <connector>HDMI-0</connector>
+              <vendor>AUS</vendor>
+              <product>ASUS VG289</product>
+              <serial>0x000097e0</serial>
+            </monitorspec>
+          </disabled>
+        </configuration>
+      </monitors>
     ''}"
-    ];
-  */
+  ];
   # Working xrandr output:
   /*
     Screen 0: minimum 8 x 8, current 7680 x 2160, maximum 32767 x 32767
@@ -94,14 +122,18 @@
   */
 
 
-  networking.hostName = "nixos";
   time.timeZone = "America/New_York";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixos";
+    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+    # Per-interface useDHCP will be mandatory in the future, so this generated config
+    # replicates the default behaviour.
+    useDHCP = false;
+    networkmanager.enable = true;
+
+    dhcpcd.wait = "background";
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -110,11 +142,24 @@
     keyMap = "us";
   };
 
-  services.flatpak.enable = true;
-  services.openssh.enable = true;
-  services.ratbagd.enable = true; # needed for piper
+  # Needed for PipeWire-based PulseAudio
+  hardware.pulseaudio.enable = false;
 
   services = {
+    # Enable CUPS to print documents.
+    printing.enable = true;
+    flatpak.enable = true;
+    openssh.enable = true;
+    ratbagd.enable = true; # needed for piper (gaming mouse configurator)
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # enable jack applications, not really needed
+      jack.enable = true;
+    };
+
     xserver = {
       enable = true;
       displayManager.gdm.enable = true;
@@ -130,13 +175,9 @@
     udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  # pipewire setup https://nixos.wiki/wiki/PipeWire
+  security.rtkit.enable = true;
 
   users.users.mike = {
     isNormalUser = true;
@@ -161,6 +202,7 @@
     clang
     clang-tools
     upower
+    htop
     rustup
     vscode
     bitwarden
