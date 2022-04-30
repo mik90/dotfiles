@@ -112,6 +112,7 @@
 
   services.flatpak.enable = true;
   services.openssh.enable = true;
+  services.ratbagd.enable = true; # needed for piper
 
   services = {
     xserver = {
@@ -154,10 +155,12 @@
     neovim
     git
     python3Full
+    piper # Gaming mouse config
     gcc
     binutils-unwrapped
     clang
     clang-tools
+    upower
     rustup
     vscode
     bitwarden
@@ -216,7 +219,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "21.11";
 
 }
 
