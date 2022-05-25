@@ -20,6 +20,7 @@
   home.packages = [
     pkgs.htop
     pkgs.nixpkgs-fmt
+    pkgs.yarn
   ];
 
   programs.git = {
