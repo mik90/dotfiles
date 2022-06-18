@@ -1,18 +1,37 @@
 { config, pkgs, ... }:
-
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+in
 {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
+      (import "${home-manager}/nixos")
     ];
   nixpkgs.config.allowUnfree = true;
 
-  users.users.eve.isNormalUser = true;
   home-manager.users.mike = { pkgs, ... }: {
-    home.packages = [ ]; # e.g. pkgs.atool pkgs.httpie
     programs.bash.enable = true;
+    home.packages = [
+      pkgs.htop
+      pkgs.nixpkgs-fmt
+      pkgs.yarn
+    ];
+    home.username = "mike";
+    home.homeDirectory = "/home/mike";
+
+    programs.git = {
+      enable = true;
+      userName = "Mike Kaliman";
+      userEmail = "kaliman.mike@gmail.com";
+    };
+    dconf.settings = {
+      # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
+      "org/gnome/desktop/interface" = {
+        gtk-theme = "Adwaita-dark";
+      };
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
