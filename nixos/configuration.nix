@@ -25,6 +25,7 @@
       efiSupport = true;
       configurationLimit = 4;
       useOSProber = true;
+      default = "saved";
     };
     systemd-boot = {
       enable = true;
@@ -171,7 +172,7 @@
 
     # https://gvolpe.com/blog/gnome3-on-nixos/
     # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
-    dbus.packages = [ pkgs.gnome3.dconf ];
+    dbus.packages = [ pkgs.dconf ];
     udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
   };
 
