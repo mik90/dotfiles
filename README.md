@@ -20,9 +20,4 @@ Update boot entry with `sudo nixos-rebuild boot`
 
 Format manually with `nixpkgs-fmt`
 
-## home-manager/
-
-Nix home manager <https://nix-community.github.io/home-manager/index.html>
-This folder is symlinked to ~/.config/nixpkgs
-
-Update to new version with `home-manager switch`
+Nix home-manager is managed under configuration.nix and requires running nixos-rebuild as root

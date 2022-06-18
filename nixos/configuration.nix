@@ -9,14 +9,22 @@ in
       ./hardware-configuration.nix
       (import "${home-manager}/nixos")
     ];
-  nixpkgs.config.allowUnfree = true;
+  # Alow unfree system packages
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   home-manager.users.mike = { pkgs, ... }: {
+    # Alow unfree home-manager packages
+    nixpkgs.config = {
+      allowUnfree = true;
+    };
     programs.bash.enable = true;
     home.packages = [
       pkgs.htop
       pkgs.nixpkgs-fmt
       pkgs.yarn
+      pkgs.discord
     ];
     home.username = "mike";
     home.homeDirectory = "/home/mike";
@@ -235,6 +243,10 @@ in
 
   programs.mtr.enable = true;
 
+ 
+  programs.bash.loginShellInit = ''
+    export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/local/share:/usr/share
+   '';
 
   programs.gnupg.agent = {
     enable = true;
