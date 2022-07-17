@@ -170,8 +170,11 @@ in
     keyMap = "us";
   };
 
-  # Needed for PipeWire-based PulseAudio
-  hardware.pulseaudio.enable = false;
+  hardware = {
+    bluetooth.enable = true;
+    # Needed for PipeWire-based PulseAudio
+    pulseaudio.enable = false;
+  };
 
   services = {
     # Enable CUPS to print documents.
@@ -244,9 +247,11 @@ in
   programs.mtr.enable = true;
 
  
-  programs.bash.loginShellInit = ''
-    export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/local/share:/usr/share
-   '';
+  # TODO: set this within home-manager
+  # I dont think this works
+  #programs.bash.loginShellInit = ''
+  #export XDG_DATA_DIRS=/home/mike/.nix-profile/share:/usr/local/share:/usr/share:$XDG_DATA_DIRS
+  # '';
 
   programs.gnupg.agent = {
     enable = true;
