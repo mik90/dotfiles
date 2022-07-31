@@ -48,13 +48,9 @@ in
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot";
     };
-    grub = {
-      efiSupport = true;
-      configurationLimit = 4;
-      useOSProber = true;
-      default = "saved";
-    };
+    timeout = 60; # Seconds
     systemd-boot = {
+      configurationLimit = 4;
       enable = true;
     };
   };
@@ -246,7 +242,7 @@ in
 
   programs.mtr.enable = true;
 
- 
+
   # TODO: set this within home-manager
   # I dont think this works
   #programs.bash.loginShellInit = ''
