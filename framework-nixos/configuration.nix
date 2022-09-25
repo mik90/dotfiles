@@ -24,6 +24,7 @@ in
     ];
     home.username = "mike";
     home.homeDirectory = "/home/mike";
+    xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
 
     programs.git = {
       enable = true;
@@ -34,6 +35,15 @@ in
       # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
       "org/gnome/desktop/interface" = {
         gtk-theme = "Adwaita-dark";
+      };
+      # Use min/max/close for the window titlebar
+      "org/gnome/desktop/wm/preferences" = {
+        button-layout = ":minimize,maximize,close";
+      };
+      # Turns off terminal bell sound in firefox, kinda sounds like "boink" tbh
+      # https://unix.stackexchange.com/a/444869
+      "org/gnome/desktop/sound" = {
+        event-sounds = false;
       };
     };
   };
@@ -137,32 +147,8 @@ in
     viAlias = true;
     vimAlias = true;
     configure = {
-      # TODO: Get this rc to work
-      customRC = ''
-        set shiftwidth=2
-        set softtabstop=2
-        set backspace=indent,eol,start
-        set ruler
-        set number
-        set relativenumber
-        set noexpandtab
-        set nohlsearch
-      
-        highlight CursorLine cterm=none ctermbg=235
-        let g:indentLine_leadingSpaceChar='·'
-        let g:indentLine_leadingSpaceEnabled=1
-
-        autocmd filetype makefile setlocal noexpandtab 
-        autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
-        autocmd filetype java setlocal expandtab 
-        autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
-        autocmd filetype markdown setlocal expandtab 
-        autocmd filetype sh setlocal expandtab 
-        autocmd filetype cmake setlocal expandtab 
-      '';
       packages.nix.start = with pkgs.vimPlugins; [ vim-nix indentLine ];
     };
-
   };
 
   # Open ports in the firewall.
