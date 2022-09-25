@@ -10,11 +10,9 @@ Install package into env temporarily `nix-env -i <pkg>`
 
 Test out building a new version with `nixos-rebuild build --upgrade`
 
-Update to new version with `sudo nixos-rebuild switch`
+Update to new version with `sudo nixos-rebuild switch`. Also updates the boot entry
 
 Clear old boot entries `sudo nix-collect-garbage --delete-older-than 14d`
-
-Update boot entry with `sudo nixos-rebuild boot`
 
 Format manually with `nixpkgs-fmt`
 
