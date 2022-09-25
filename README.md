@@ -4,9 +4,7 @@ General settings that I have across multiple machines.
 
 Below are the descriptions of the folders in the repo
 
-## nixos/
-
-This folder is symlinked to /etc/nixos
+## Cheat sheet
 
 Install package into env temporarily `nix-env -i <pkg>`
 
@@ -21,3 +19,16 @@ Update boot entry with `sudo nixos-rebuild boot`
 Format manually with `nixpkgs-fmt`
 
 Nix home-manager is managed under configuration.nix and requires running nixos-rebuild as root
+
+## framework-nixos/
+
+NixOS install for my framework laptop
+
+`/etc/nixos` is symlinked to this folder
+e.g. sudo ln -sv  `/path/to/this/folder/framework-nixos /etc/nixos`
+
+## nixos/
+
+NixOS install for my desktop's linux partition
+
+`/etc/nixos` is symlinked to this folder
