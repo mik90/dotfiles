@@ -1,6 +1,5 @@
 # Tracked via git modules
 tmux-config/*
 
-*/hardware-configuration.nix
 *nixos/result
 result
