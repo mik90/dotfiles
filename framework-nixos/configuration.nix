@@ -130,6 +130,7 @@ in
     htop
     rustup
     firefox
+    google-chrome
     vscode
     bitwarden
     pciutils
@@ -152,10 +153,11 @@ in
     enable = true;
     keyMode = "vi";
     historyLimit = 5000;
+    baseIndex = 1;
     shortcut = "a";
     terminal = "screen-256color";
-    # A lot of these settings are pulled from https://github.com/gpakosz/.tmux
     extraConfig = ''
+      # A lot of these settings are pulled from https://github.com/gpakosz/.tmux
 
       # Allow scrolling
       set -g mouse on
