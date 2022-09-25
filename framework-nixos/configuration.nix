@@ -49,10 +49,16 @@ in
   };
 
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # Use the systemd-boot EFI boot loader.
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 4;
+      consoleMode = "auto";
+    };
+    efi.canTouchEfiVariables = true;
+    efi.efiSysMountPoint = "/boot/efi";
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
 
