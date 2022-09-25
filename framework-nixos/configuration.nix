@@ -18,9 +18,11 @@ in
     programs.bash.enable = true;
     home.packages = [
       pkgs.htop
+      pkgs.neofetch
       pkgs.nixpkgs-fmt
       pkgs.yarn
       pkgs.discord
+      pkgs.vlc
     ];
     home.username = "mike";
     home.homeDirectory = "/home/mike";
@@ -46,6 +48,11 @@ in
         event-sounds = false;
       };
     };
+  };
+  users.users.mike = {
+    isNormalUser = true;
+    description = "Mike Kaliman";
+    extraGroups = [ "networkmanager" "dialout" "wheel" ];
   };
 
 
@@ -107,15 +114,6 @@ in
     udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
   };
 
-  users.users.mike = {
-    isNormalUser = true;
-    description = "Mike Kaliman";
-    extraGroups = [ "networkmanager" "dialout" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    ];
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -131,12 +129,13 @@ in
     upower
     htop
     rustup
+    firefox
     vscode
     bitwarden
+    tmux
     pciutils
+    usbutils
     wget
-    firefox
-    home-manager
   ];
   environment.variables.EDITOR = "nvim";
 
