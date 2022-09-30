@@ -1,60 +1,16 @@
 { config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
-in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      (import "${home-manager}/nixos")
     ];
-  home-manager.users.mike = { pkgs, ... }: {
-    # Alow unfree home-manager packages
-    nixpkgs.config = {
-      allowUnfree = true;
-    };
-    programs.bash.enable = true;
-    home.packages = [
-      pkgs.htop
-      pkgs.neofetch
-      pkgs.nixpkgs-fmt
-      pkgs.yarn
-      pkgs.discord
-      pkgs.vlc
-    ];
-    home.username = "mike";
-    home.homeDirectory = "/home/mike";
-    xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
-
-    programs.git = {
-      enable = true;
-      userName = "Mike Kaliman";
-      userEmail = "kaliman.mike@gmail.com";
-    };
-    dconf.settings = {
-      # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
-      "org/gnome/desktop/interface" = {
-        gtk-theme = "Adwaita-dark";
-      };
-      # Use min/max/close for the window titlebar
-      "org/gnome/desktop/wm/preferences" = {
-        button-layout = ":minimize,maximize,close";
-      };
-      # Turns off terminal bell sound in firefox, kinda sounds like "boink" tbh
-      # https://unix.stackexchange.com/a/444869
-      "org/gnome/desktop/sound" = {
-        event-sounds = false;
-      };
-    };
-  };
   users.users.mike = {
     isNormalUser = true;
     description = "Mike Kaliman";
     extraGroups = [ "networkmanager" "dialout" "wheel" ];
   };
-
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
