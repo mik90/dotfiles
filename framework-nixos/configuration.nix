@@ -58,7 +58,7 @@ in
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
-  
+
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
     systemd-boot = {
@@ -151,6 +151,9 @@ in
   environment.systemPackages = with pkgs; [
     neovim
     git
+    bat
+    fzf
+    ripgrep
     python3Full
     piper # Gaming mouse config
     gcc

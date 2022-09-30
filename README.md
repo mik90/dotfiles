@@ -22,11 +22,11 @@ Nix home-manager is managed under configuration.nix and requires running nixos-r
 
 NixOS install for my framework laptop
 
-`/etc/nixos` is symlinked to this folder
-e.g. sudo ln -sv  `/path/to/this/folder/framework-nixos /etc/nixos`
+`/etc/nixos` is symlinked to this folder. e.g. sudo ln -sv  `/path/to/this/folder/framework-nixos /etc/nixos`
 
-## nixos/
+## desktop-nixos/
 
 NixOS install for my desktop's linux partition
 
-`/etc/nixos` is symlinked to this folder
+`/etc/nixos` is symlinked to this folder.  e.g. sudo ln -sv  `/path/to/this/folder/desktop-nixos /etc/nixos`
+
