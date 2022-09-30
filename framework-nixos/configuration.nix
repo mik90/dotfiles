@@ -110,22 +110,22 @@ in
   i18n.defaultLocale = "en_US.utf8";
 
 
-  # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    xkbVariant = "";
-    # Enable the GNOME Desktop Environment.
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-  };
-
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services = {
+    # Configure keymap in X11
+    xserver = {
+      enable = true;
+      layout = "us";
+      xkbVariant = "";
+      # Enable the GNOME Desktop Environment.
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
+
     # Enable CUPS to print documents.
     printing.enable = true;
     flatpak.enable = true;
@@ -143,6 +143,8 @@ in
     # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
     dbus.packages = [ pkgs.dconf ];
     udev.packages = [ pkgs.gnome3.gnome-settings-daemon ];
+
+    fwupd.enable = true;
   };
 
   # Allow unfree packages
