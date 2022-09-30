@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
@@ -14,18 +15,19 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e7995b9e-3517-4a7e-a965-81690ce1e9f2";
+    {
+      device = "/dev/disk/by-uuid/e7995b9e-3517-4a7e-a965-81690ce1e9f2";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/CB03-1E66";
+    {
+      device = "/dev/disk/by-uuid/CB03-1E66";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/62d9c843-7f7a-4aaf-aec0-79d3ce286a4f"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/62d9c843-7f7a-4aaf-aec0-79d3ce286a4f"; }];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display

@@ -56,6 +56,9 @@ in
   };
 
 
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.enableRedistributableFirmware = true;
+  
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
     systemd-boot = {
@@ -66,7 +69,6 @@ in
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot/efi";
   };
-
   systemd.tmpfiles.rules = [
     # Load up a monitors.xml so that GDM uses the correct resolution
     "L+ /run/gdm/.config/monitors.xml - - - - ${pkgs.writeText "gdm-monitors.xml" ''
@@ -290,5 +292,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }
