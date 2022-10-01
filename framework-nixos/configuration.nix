@@ -5,7 +5,6 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./programs.nix
     ];
   users.users.mike = {
     isNormalUser = true;
@@ -15,9 +14,6 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
-
-  # needed as per https://github.com/divnix/digga/issues/30
-  home-manager.useGlobalPkgs = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
