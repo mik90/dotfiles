@@ -1,15 +1,5 @@
 { config, lib, pkgs, ... }:
-# Note: remove this let - in when building with the flake
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
-in
 {
-  # Note: remove this import when building with the flake
-  imports =
-    [
-      (import "${home-manager}/nixos")
-    ];
-  # Note: remove line as well w/ flake
   home-manager.users.mike = { pkgs, ... }: {
     home.username = "mike";
     home.homeDirectory = "/home/mike";
@@ -19,23 +9,15 @@ in
       allowUnfree = true;
     };
 
-    programs.bash.enable = true;
-
     home.packages = [
       pkgs.htop
       pkgs.neofetch
       pkgs.nixpkgs-fmt
       pkgs.yarn
       pkgs.discord
+      pkgs.dconf
       pkgs.vlc
     ];
-    xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
-
-    programs.git = {
-      enable = true;
-      userName = "Mike Kaliman";
-      userEmail = "kaliman.mike@gmail.com";
-    };
     dconf.settings = {
       # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
       "org/gnome/desktop/interface" = {
@@ -51,5 +33,13 @@ in
         event-sounds = false;
       };
     };
+    xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
+
+    programs.git = {
+      enable = true;
+      userName = "Mike Kaliman";
+      userEmail = "kaliman.mike@gmail.com";
+    };
+
   };
 }

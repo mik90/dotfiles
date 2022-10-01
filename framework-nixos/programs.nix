@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 {
+  programs.bash.enable = true;
+
   programs.tmux = {
     enable = true;
     keyMode = "vi";
