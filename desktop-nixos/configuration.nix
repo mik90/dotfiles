@@ -1,64 +1,41 @@
-{ config, pkgs, ... }:
-let
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
-in
+{ config, pkgs, nixpkgs, ... }:
 {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      (import "${home-manager}/nixos")
     ];
+  users.users.mike = {
+    isNormalUser = true;
+    description = "Mike Kaliman";
+    home = "/home/mike";
+    extraGroups = [ "networkmanager" "dialout" "wheel" ];
+  };
   # Alow unfree system packages
   nixpkgs.config = {
     allowUnfree = true;
   };
 
-  home-manager.users.mike = { pkgs, ... }: {
-    # Alow unfree home-manager packages
-    nixpkgs.config = {
-      allowUnfree = true;
-    };
-    programs.bash.enable = true;
-    home.packages = [
-      pkgs.htop
-      pkgs.nixpkgs-fmt
-      pkgs.yarn
-      pkgs.discord
-    ];
-    home.username = "mike";
-    home.homeDirectory = "/home/mike";
 
-    programs.git = {
-      enable = true;
-      userName = "Mike Kaliman";
-      userEmail = "kaliman.mike@gmail.com";
-    };
-    dconf.settings = {
-      # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
-      "org/gnome/desktop/interface" = {
-        gtk-theme = "Adwaita-dark";
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      timeout = 60; # Seconds
+      systemd-boot = {
+        configurationLimit = 4;
+        enable = true;
       };
     };
+    # Unsure if this overides boot.kernelModules in hardware-configuration.nix entirely or just appends to it
+    kernelModules = [
+      "iwlwifi"
+      "kvm-amd"
+    ];
   };
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
-    };
-    timeout = 60; # Seconds
-    systemd-boot = {
-      configurationLimit = 4;
-      enable = true;
-    };
-  };
-  # Unsure if this overides boot.kernelModules in hardware-configuration.nix entirely or just appends to it
-  boot.kernelModules = [
-    "iwlwifi"
-    "kvm-amd"
-  ];
 
   # Attempts to address slow network startup
   # Source: https://majiehong.com/post/2021-07-30_slow_nixos_startup/
@@ -145,11 +122,10 @@ in
     640x480       59.94    59.93  
   */
 
-
   time.timeZone = "America/New_York";
 
   networking = {
-    hostName = "nixos";
+    hostName = "desktop";
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
     # replicates the default behaviour.
@@ -206,16 +182,6 @@ in
   # pipewire setup https://nixos.wiki/wiki/PipeWire
   security.rtkit.enable = true;
 
-  users.users.mike = {
-    isNormalUser = true;
-    home = "/home/mike";
-    description = "Mike Kaliman";
-    extraGroups = [
-      "wheel"
-      "dailout"
-      "networkmanager"
-    ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -225,6 +191,9 @@ in
     python3Full
     piper # Gaming mouse config
     gcc
+    bat
+    fzf
+    ripgrep
     binutils-unwrapped
     clang
     clang-tools
@@ -235,8 +204,10 @@ in
     bitwarden
     pciutils
     wget
+    usbutils
+    xsel
+    xclip
     firefox
-    home-manager
   ];
   environment.variables.EDITOR = "nvim";
 
@@ -253,40 +224,6 @@ in
     enable = true;
     enableSSHSupport = true;
   };
-  programs.neovim = {
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    configure = {
-      # TODO: Get this rc to work
-      customRC = ''
-        set shiftwidth=2
-        set softtabstop=2
-        set backspace=indent,eol,start
-        set ruler
-        set number
-        set relativenumber
-        set noexpandtab
-        set nohlsearch
-      
-        highlight CursorLine cterm=none ctermbg=235
-        let g:indentLine_leadingSpaceChar='·'
-        let g:indentLine_leadingSpaceEnabled=1
-
-        autocmd filetype makefile setlocal noexpandtab 
-        autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
-        autocmd filetype java setlocal expandtab 
-        autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
-        autocmd filetype markdown setlocal expandtab 
-        autocmd filetype sh setlocal expandtab 
-        autocmd filetype cmake setlocal expandtab 
-      '';
-      packages.nix.start = with pkgs.vimPlugins; [ vim-nix indentLine ];
-    };
-
-  };
-
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -3,7 +3,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
     [
-      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
   users.users.mike = {
@@ -54,10 +53,10 @@
     ''}"
   ];
 
-  networking.hostName = "framework"; # Define your hostname.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "framework";
+    networkmanager.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -121,7 +120,7 @@
     upower
     htop
     rustup
-    # Hopefully -wayland will handle the black firefox on startup
+    # firefox-wayland fixes issue with firefox starting up as a black screen
     # https://discourse.nixos.org/t/firefox-all-black-when-first-launched-after-login/21143/7?u=m_mike
     firefox-wayland
     google-chrome

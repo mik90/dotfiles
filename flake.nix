@@ -29,5 +29,21 @@
         ];
         specialArgs = { inherit nixpkgs; };
       };
+      nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./desktop-nixos/configuration.nix
+          ./common/programs.nix
+          home-manager.nixosModules.home-manager
+          {
+            # both bools needed as per https://github.com/divnix/digga/issues/30
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.mike = homeManagerConfFor ./common/home.nix;
+
+          }
+        ];
+        specialArgs = { inherit nixpkgs; };
+      };
     };
 }
