@@ -1,5 +1,16 @@
 { config, lib, pkgs, ... }:
+# Note: remove this let - in when building with the flake
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz";
+in
 {
+  # Note: remove this import when building with the flake
+  imports =
+    [
+      (import "${home-manager}/nixos")
+    ];
+  # Note: remove line as well w/ flake
+  home-manager.users.mike = { pkgs, ... }: {
     home.username = "mike";
     home.homeDirectory = "/home/mike";
 
@@ -11,12 +22,12 @@
     programs.bash.enable = true;
 
     home.packages = [
-      htop
-      neofetch
-      nixpkgs-fmt
-      yarn
-      discord
-      vlc
+      pkgs.htop
+      pkgs.neofetch
+      pkgs.nixpkgs-fmt
+      pkgs.yarn
+      pkgs.discord
+      pkgs.vlc
     ];
     xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
 
@@ -40,4 +51,5 @@
         event-sounds = false;
       };
     };
+  };
 }

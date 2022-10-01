@@ -30,3 +30,10 @@ NixOS install for my desktop's linux partition
 
 `/etc/nixos` is symlinked to this folder.  e.g. sudo ln -sv  `/path/to/this/folder/desktop-nixos /etc/nixos`
 
+## flake.nix
+
+I eventually want to be able to build this via flakes but it's not working yet.
+
+It should eventually build with `nixos-rebuild build --flake '.#framework'` (or desktop)
+
+Once that's done, I can just clone this entire repo to `/etc/nixos` so `flake.nix` will be at the base of that dir
