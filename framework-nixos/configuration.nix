@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs, ... }:
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports =
@@ -15,6 +15,9 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
+
+  # needed as per https://github.com/divnix/digga/issues/30
+  home-manager.useGlobalPkgs = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -55,7 +58,7 @@
     ''}"
   ];
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "framework"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;

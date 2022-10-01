@@ -4,6 +4,10 @@ General settings that I have across multiple machines.
 
 Below are the descriptions of the folders in the repo
 
+`/etc/nixos` is symlinked to this folder.  e.g. sudo ln -sv  `/path/to/this/folder /etc/nixos`
+
+I spend more time on my laptop so that nix setup will be updated more often than my desktop
+
 ## Cheat sheet
 
 Install package into env temporarily `nix-env -i <pkg>`
@@ -22,18 +26,14 @@ Nix home-manager is managed under configuration.nix and requires running nixos-r
 
 NixOS install for my framework laptop
 
-`/etc/nixos` is symlinked to this folder. e.g. sudo ln -sv  `/path/to/this/folder/framework-nixos /etc/nixos`
-
 ## desktop-nixos/
 
 NixOS install for my desktop's linux partition
 
-`/etc/nixos` is symlinked to this folder.  e.g. sudo ln -sv  `/path/to/this/folder/desktop-nixos /etc/nixos`
-
 ## flake.nix
 
-I eventually want to be able to build this via flakes but it's not working yet.
+It should eventually build with `nixos-rebuild build --flake '.#framework'` (or '.#desktop')
 
-It should eventually build with `nixos-rebuild build --flake '.#framework'` (or desktop)
+After first running, it can then run with `nixos-rebuild build --flake '.#'`. Or maybe just `--flake ''`?
 
 Once that's done, I can just clone this entire repo to `/etc/nixos` so `flake.nix` will be at the base of that dir
