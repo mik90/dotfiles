@@ -13,6 +13,9 @@
     pkgs.htop
     pkgs.neofetch
     pkgs.nixpkgs-fmt
+    pkgs.cmake
+    pkgs.conan
+    pkgs.ninja
     pkgs.yarn
     pkgs.discord
     pkgs.vlc
