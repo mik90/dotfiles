@@ -4,6 +4,8 @@
     interactiveShellInit = builtins.readFile ./cdu.bash;
   };
 
+  virtualisation.docker.enable = true;
+
   programs.tmux = {
     enable = true;
     keyMode = "vi";

@@ -9,7 +9,7 @@
     isNormalUser = true;
     description = "Mike Kaliman";
     home = "/home/mike";
-    extraGroups = [ "networkmanager" "dialout" "wheel" ];
+    extraGroups = [ "networkmanager" "dialout" "wheel" "docker" ];
   };
   # Alow unfree system packages
   nixpkgs.config = {

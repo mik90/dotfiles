@@ -8,12 +8,13 @@
   users.users.mike = {
     isNormalUser = true;
     description = "Mike Kaliman";
-    extraGroups = [ "networkmanager" "dialout" "wheel" ];
+    extraGroups = [ "networkmanager" "dialout" "wheel" "docker" ];
   };
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
-  
+
+
   # Needed for VA-API https://nixos.wiki/wiki/Accelerated_Video_Playback
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -22,7 +23,7 @@
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
       vaapiVdpau
       libvdpau-va-gl
     ];
