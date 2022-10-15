@@ -48,31 +48,41 @@
     vimAlias = true;
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
-        vim-nix
-        indentLine
-        nvim-lspconfig
+      {
+        plugin = indentLine;
+        config = ''
+          let g:indentLine_leadingSpaceChar='·'
+          let g:indentLine_leadingSpaceEnabled=1
+        '';
+      }
+      {
+        plugin = nvim-lspconfig;
+        config = ''
+          packadd! nvim-lspconfig.lua
+          lua require 'nvim-lspconfig'.setup()
+        '';
+      }
+      vim-nix
     ];
   };
 
   xdg.configFile."nvim/init.vim".text = ''
-    set shiftwidth=2
-    set softtabstop=2
-    set backspace=indent,eol,start
-    set ruler
-    set number
-    set relativenumber
-    set noexpandtab
-    set nohlsearch
 
-    let g:indentLine_leadingSpaceChar='·'
-    let g:indentLine_leadingSpaceEnabled=1
+      set shiftwidth=2
+      set softtabstop=2
+      set backspace=indent,eol,start
+      set ruler
+      set number
+      set relativenumber
+      set noexpandtab
+      set nohlsearch
 
-    autocmd filetype makefile setlocal noexpandtab 
-    autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
-    autocmd filetype java setlocal expandtab 
-    autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
-    autocmd filetype markdown setlocal expandtab 
-    autocmd filetype sh setlocal expandtab 
-    autocmd filetype cmake setlocal expandtab 
-  '';
+      autocmd filetype makefile setlocal noexpandtab 
+      autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
+      autocmd filetype java setlocal expandtab 
+      autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
+      autocmd filetype markdown setlocal expandtab 
+      autocmd filetype sh setlocal expandtab 
+      autocmd filetype cmake setlocal expandtab 
+    '';
 }
