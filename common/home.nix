@@ -9,16 +9,16 @@
     allowUnfree = true;
   };
 
-  home.packages = [
-    pkgs.htop
-    pkgs.neofetch
-    pkgs.nixpkgs-fmt
-    pkgs.cmake
-    pkgs.conan
-    pkgs.ninja
-    pkgs.yarn
-    pkgs.discord
-    pkgs.vlc
+  home.packages = with pkgs; [
+    htop
+    neofetch
+    nixpkgs-fmt
+    cmake
+    conan
+    ninja
+    yarn
+    discord
+    vlc
   ];
   dconf.enable = true;
   dconf.settings = {
@@ -36,12 +36,43 @@
       event-sounds = false;
     };
   };
-  xdg.configFile."nvim/init.vim".source = dotfiles/neovim/init.vim;
-
   programs.git = {
     enable = true;
     userName = "Mike Kaliman";
     userEmail = "kaliman.mike@gmail.com";
   };
 
+
+  programs.neovim = {
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    plugins = with pkgs.vimPlugins; [
+        vim-nix
+        indentLine
+        nvim-lspconfig
+    ];
+  };
+
+  xdg.configFile."nvim/init.vim".text = ''
+    set shiftwidth=2
+    set softtabstop=2
+    set backspace=indent,eol,start
+    set ruler
+    set number
+    set relativenumber
+    set noexpandtab
+    set nohlsearch
+
+    let g:indentLine_leadingSpaceChar='·'
+    let g:indentLine_leadingSpaceEnabled=1
+
+    autocmd filetype makefile setlocal noexpandtab 
+    autocmd filetype python setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4
+    autocmd filetype java setlocal expandtab 
+    autocmd filetype cpp setlocal expandtab tabstop=4 softtabstop=4  shiftwidth=4 
+    autocmd filetype markdown setlocal expandtab 
+    autocmd filetype sh setlocal expandtab 
+    autocmd filetype cmake setlocal expandtab 
+  '';
 }
