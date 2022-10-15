@@ -22,6 +22,8 @@ Format manually with `nixpkgs-fmt`
 
 Nix home-manager is managed under configuration.nix and requires running nixos-rebuild as root
 
+Update flake.lock with `nix flake update`
+
 ## framework-nixos/
 
 NixOS install for my framework laptop
