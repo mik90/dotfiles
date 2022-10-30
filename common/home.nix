@@ -11,6 +11,7 @@
 
   home.packages = with pkgs; [
     htop
+    powertop
     neofetch
     nixpkgs-fmt
     cmake
