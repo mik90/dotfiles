@@ -30,7 +30,6 @@
         enable = true;
       };
     };
-    # Unsure if this overides boot.kernelModules in hardware-configuration.nix entirely or just appends to it
     kernelModules = [
       "iwlwifi"
       "kvm-amd"
