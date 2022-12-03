@@ -1,5 +1,7 @@
 # Tracked via git modules
 tmux-config/*
 
+# This will be different across machines
+flake.lock
 *nixos/result
 result
