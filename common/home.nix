@@ -3,6 +3,7 @@
 
   home.username = "mike";
   home.homeDirectory = "/home/mike";
+  home.stateVersion = "22.11";
 
   # Alow unfree home-manager packages
   nixpkgs.config = {
@@ -13,6 +14,8 @@
     htop
     powertop
     neofetch
+    gdb
+    lldb
     nixpkgs-fmt
     cmake
     conan

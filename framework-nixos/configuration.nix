@@ -34,7 +34,6 @@
     systemd-boot = {
       enable = true;
       configurationLimit = 4;
-      consoleMode = "auto";
     };
     efi.canTouchEfiVariables = true;
     efi.efiSysMountPoint = "/boot/efi";
