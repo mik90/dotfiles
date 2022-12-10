@@ -18,6 +18,7 @@
     lldb
     nixpkgs-fmt
     cmake
+    rust-analyzer
     conan
     ninja
     yarn
@@ -54,23 +55,41 @@
     plugins = with pkgs.vimPlugins; [
       {
         plugin = indentLine;
-        config = ''
-          let g:indentLine_leadingSpaceChar='·'
-          let g:indentLine_leadingSpaceEnabled=1
-        '';
-      }
-      {
-        plugin = nvim-lspconfig;
-        config = ''
-          packadd! nvim-lspconfig.lua
-          lua require 'nvim-lspconfig'.setup()
-        '';
+        # Doen't work if i have the config here
       }
       vim-nix
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        # Use :lua print(vim.inspect(vim.lsp.get_active_clients())) to check if an lsp is running
+        config = ''
+        '';
+      }
     ];
   };
 
-  xdg.configFile."nvim/init.vim".text = ''
+  xdg.configFile."nvim/init.vim".text =
+    let
+      plugins = [pkgs.vimPlugins.vim-nix  pkgs.vimPlugins.nvim-lspconfig pkgs.vimPlugins.indentLine ];
+      loadPlugin = plugin: ''
+          set rtp^=${plugin.outPath}
+          set rtp+=${plugin.outPath}/after
+        '';
+    in
+   ''
+      " Workaround for broken handling of packpath by vim8/neovim for ftplugins
+      filetype off | syn off
+      ${builtins.concatStringsSep "\n"
+        (map loadPlugin plugins)}
+      filetype indent plugin on | syn on
+
+      " Set package path of lspconfig
+      luado package.path = package.path .. ";${pkgs.vimPlugins.nvim-lspconfig.outPath}/lua/?.lua"
+
+
+      " It doesn't work if i have this in the config section of the above setup
+      let g:indentLine_leadingSpaceChar='·'
+      let g:indentLine_leadingSpaceEnabled=1
 
       set shiftwidth=2
       set softtabstop=2
@@ -88,5 +107,39 @@
       autocmd filetype markdown setlocal expandtab 
       autocmd filetype sh setlocal expandtab 
       autocmd filetype cmake setlocal expandtab 
+
+      lua << EOF
+
+          -- Use an on_attach function to only map the following keys
+          -- after the language server attaches to the current buffer
+          local on_attach = function(client, bufnr)
+            -- Enable completion triggered by <c-x><c-o>
+            vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+            -- Mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local bufopts = { noremap=true, silent=true, buffer=bufnr }
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wl', function()
+              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, bufopts)
+            vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+            vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+          end
+
+          require('lspconfig')['rust_analyzer'].setup{
+            on_attach = on_attach,
+            flags = {},
+          }
+      EOF
     '';
 }
