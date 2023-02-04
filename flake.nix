@@ -11,7 +11,8 @@
     let
       homeManagerConfFor = config: { ... }: {
         imports = [ config ];
-      }; in
+      };
+    in
     {
       nixosConfigurations.framework = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

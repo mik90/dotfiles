@@ -97,6 +97,10 @@
 
     # Enable CUPS to print documents.
     printing.enable = true;
+    # Printing stuff
+    avahi.enable = true;
+    avahi.openFirewall = true;
+
     flatpak.enable = true;
     openssh.enable = true;
     ratbagd.enable = true; # needed for piper (gaming mouse configurator)
@@ -133,6 +137,7 @@
     clang-tools
     upower
     htop
+    hplipWithPlugin
     rustup
     # firefox-wayland fixes issue with firefox starting up as a black screen
     # https://discourse.nixos.org/t/firefox-all-black-when-first-launched-after-login/21143/7?u=m_mike

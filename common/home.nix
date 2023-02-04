@@ -53,30 +53,25 @@
     vimAlias = true;
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
-      {
-        plugin = indentLine;
-        # Doen't work if i have the config here
-      }
+      indentLine
       vim-nix
-      {
-        plugin = nvim-lspconfig;
-        type = "lua";
-        # Use :lua print(vim.inspect(vim.lsp.get_active_clients())) to check if an lsp is running
-        config = ''
-        '';
-      }
+      nvim-lspconfig
     ];
   };
 
   xdg.configFile."nvim/init.vim".text =
     let
-      plugins = [pkgs.vimPlugins.vim-nix  pkgs.vimPlugins.nvim-lspconfig pkgs.vimPlugins.indentLine ];
+      plugins = [
+        pkgs.vimPlugins.vim-nix
+        pkgs.vimPlugins.nvim-lspconfig
+        pkgs.vimPlugins.indentLine
+      ];
       loadPlugin = plugin: ''
-          set rtp^=${plugin.outPath}
-          set rtp+=${plugin.outPath}/after
-        '';
+        set rtp^=${plugin.outPath}
+        set rtp+=${plugin.outPath}/after
+      '';
     in
-   ''
+    ''
       " Workaround for broken handling of packpath by vim8/neovim for ftplugins
       filetype off | syn off
       ${builtins.concatStringsSep "\n"
@@ -109,6 +104,11 @@
       autocmd filetype cmake setlocal expandtab 
 
       lua << EOF
+          local opts = { noremap=true, silent=true }
+          vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+          vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
           -- Use an on_attach function to only map the following keys
           -- after the language server attaches to the current buffer
@@ -134,6 +134,8 @@
             vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+          
+            vim.keymap.set('n', 'ff', vim.lsp.buf.formatting, opts)
           end
 
           require('lspconfig')['rust_analyzer'].setup{
