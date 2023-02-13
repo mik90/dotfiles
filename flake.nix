@@ -32,6 +32,6 @@
     in
     {
       nixosConfigurations.framework = mkSystem ./framework-nixos/configuration.nix;
-      nixosConfigurations.desktop = mkSystem "./desktop-nixos/configuration.nix";
+      nixosConfigurations.desktop = mkSystem ./desktop-nixos/configuration.nix;
     };
 }
