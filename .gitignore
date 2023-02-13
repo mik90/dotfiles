@@ -7,4 +7,6 @@ result
 # This will be different across machines. There's a way to make machine-specific lock files
 # although I can't find a good way to do it
 ./flake.lock
+# Wtf why isn't this being ignored??
+flake.lock
 
