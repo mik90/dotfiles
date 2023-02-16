@@ -46,93 +46,48 @@
     "L+ /run/gdm/.config/monitors.xml - - - - ${pkgs.writeText "gdm-monitors.xml" ''
       <!-- this should all be copied from your ~/.config/monitors.xml -->
       <monitors version="2">
-          <configuration>
-            <logicalmonitor>
-              <x>2160</x>
-              <y>1063</y>
-              <scale>1</scale>
-              <primary>yes</primary>
-              <monitor>
-                <monitorspec>
-                  <connector>DP-2</connector>
-                  <vendor>AUS</vendor>
-                  <product>ASUS VG289</product>
-                  <serial>0x00018498</serial>
-                </monitorspec>
-                <mode>
-                  <width>3840</width>
-                  <height>2160</height>
-                  <rate>59.997</rate>
-                </mode>
-              </monitor>
-            </logicalmonitor>
-            <logicalmonitor>
-              <x>0</x>
-              <y>0</y>
-              <scale>1</scale>
-              <transform>
-                <rotation>right</rotation>
-                <flipped>no</flipped>
-              </transform>
-              <monitor>
-                <monitorspec>
-                  <connector>DP-0</connector>
-                  <vendor>AUS</vendor>
-                  <product>ASUS VG289</product>
-                  <serial>0x000097e0</serial>
-                </monitorspec>
-                <mode>
-                  <width>3840</width>
-                  <height>2160</height>
-                  <rate>59.997</rate>
-                </mode>
-              </monitor>
-            </logicalmonitor>
-          </configuration>
+        <configuration>
+          <logicalmonitor>
+            <x>0</x>
+            <y>2160</y>
+            <scale>1</scale>
+            <primary>yes</primary>
+            <monitor>
+              <monitorspec>
+                <connector>DP-0</connector>
+                <vendor>SAM</vendor>
+                <product>Odyssey G7</product>
+                <serial>HCPW200123</serial>
+              </monitorspec>
+              <mode>
+                <width>3840</width>
+                <height>2160</height>
+                <rate>120.000</rate>
+              </mode>
+            </monitor>
+          </logicalmonitor>
+          <logicalmonitor>
+            <x>0</x>
+            <y>0</y>
+            <scale>1</scale>
+            <monitor>
+              <monitorspec>
+                <connector>DP-2</connector>
+                <vendor>AUS</vendor>
+                <product>ASUS VG289</product>
+                <serial>0x000097e0</serial>
+              </monitorspec>
+              <mode>
+                <width>3840</width>
+                <height>2160</height>
+                <rate>59.997</rate>
+              </mode>
+            </monitor>
+          </logicalmonitor>
+        </configuration>
       </monitors>
     ''}"
   ];
-  # Working xrandr output:
-  /*
-    Screen 0: minimum 8 x 8, current 7680 x 2160, maximum 32767 x 32767
-    DVI-D-0 disconnected (normal left inverted right x axis y axis)
-    HDMI-0 connected 3840x2160+0+0 (normal left inverted right x axis y axis) 621mm x 341mm
-    3840x2160     60.00*+  59.94    50.00    29.97    25.00    23.98  
-    2560x1440     59.95  
-    1920x1080     60.00    59.94    50.00    23.98  
-    1680x1050     59.95  
-    1440x900      59.89  
-    1440x576      50.00  
-    1440x480      59.94  
-    1280x1024     60.02  
-    1280x960      60.00  
-    1280x800      59.81  
-    1280x720      60.00    59.94    50.00  
-    1024x768      60.00  
-    800x600       60.32    56.25  
-    720x576       50.00  
-    720x480       59.94  
-    640x480       59.94    59.93  
-    DP-0 disconnected (normal left inverted right x axis y axis)
-    DP-1 disconnected (normal left inverted right x axis y axis)
-    HDMI-1 connected primary 3840x2160+3840+0 (normal left inverted right x axis y axis) 621mm x 341mm
-    3840x2160     60.00*+  59.94    50.00    29.97    25.00    23.98  
-    2560x1440     59.95  
-    1920x1080     60.00    59.94    50.00    23.98  
-    1680x1050     59.95  
-    1440x900      59.89  
-    1440x576      50.00  
-    1440x480      59.94  
-    1280x1024     60.02  
-    1280x960      60.00  
-    1280x800      59.81  
-    1280x720      60.00    59.94    50.00  
-    1024x768      60.00  
-    800x600       60.32    56.25  
-    720x576       50.00  
-    720x480       59.94  
-    640x480       59.94    59.93  
-  */
 
   time.timeZone = "America/New_York";
 
