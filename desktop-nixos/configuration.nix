@@ -38,7 +38,7 @@
 
   # Attempts to address slow network startup
   # Source: https://majiehong.com/post/2021-07-30_slow_nixos_startup/
-  systemd.services.NetworkManager-wait-onlnie.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # I'm able to just use the monitor i care about for GDM by settings the gdm config
   # https://discourse.nixos.org/t/gdm-monitor-configuration/6356
@@ -46,36 +46,49 @@
     "L+ /run/gdm/.config/monitors.xml - - - - ${pkgs.writeText "gdm-monitors.xml" ''
       <!-- this should all be copied from your ~/.config/monitors.xml -->
       <monitors version="2">
-        <configuration>
-          <logicalmonitor>
-            <x>0</x>
-            <y>0</y>
-            <scale>1</scale>
-            <primary>yes</primary>
-            <monitor>
-              <monitorspec>
-                <connector>HDMI-1</connector>
-                <vendor>AUS</vendor>
-                <product>ASUS VG289</product>
-                <serial>0x00018498</serial>
-              </monitorspec>
-              <mode>
-                <width>3840</width>
-                <height>2160</height>
-                <rate>59.996623992919922</rate>
-              </mode>
-            </monitor>
-          </logicalmonitor>
-          <disabled>
-            <!-- This is the problematic 'extra' monitor that isn't working as expected in gdm -->
-            <monitorspec>
-              <connector>HDMI-0</connector>
-              <vendor>AUS</vendor>
-              <product>ASUS VG289</product>
-              <serial>0x000097e0</serial>
-            </monitorspec>
-          </disabled>
-        </configuration>
+          <configuration>
+            <logicalmonitor>
+              <x>2160</x>
+              <y>1063</y>
+              <scale>1</scale>
+              <primary>yes</primary>
+              <monitor>
+                <monitorspec>
+                  <connector>DP-2</connector>
+                  <vendor>AUS</vendor>
+                  <product>ASUS VG289</product>
+                  <serial>0x00018498</serial>
+                </monitorspec>
+                <mode>
+                  <width>3840</width>
+                  <height>2160</height>
+                  <rate>59.997</rate>
+                </mode>
+              </monitor>
+            </logicalmonitor>
+            <logicalmonitor>
+              <x>0</x>
+              <y>0</y>
+              <scale>1</scale>
+              <transform>
+                <rotation>right</rotation>
+                <flipped>no</flipped>
+              </transform>
+              <monitor>
+                <monitorspec>
+                  <connector>DP-0</connector>
+                  <vendor>AUS</vendor>
+                  <product>ASUS VG289</product>
+                  <serial>0x000097e0</serial>
+                </monitorspec>
+                <mode>
+                  <width>3840</width>
+                  <height>2160</height>
+                  <rate>59.997</rate>
+                </mode>
+              </monitor>
+            </logicalmonitor>
+          </configuration>
       </monitors>
     ''}"
   ];
