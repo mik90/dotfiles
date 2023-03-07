@@ -167,7 +167,6 @@
     upower
     htop
     rustup
-    vscode
     bitwarden
     pciutils
     wget

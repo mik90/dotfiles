@@ -143,7 +143,6 @@
     # https://discourse.nixos.org/t/firefox-all-black-when-first-launched-after-login/21143/7?u=m_mike
     firefox-wayland
     google-chrome
-    vscode
     bitwarden
     pciutils
     usbutils

@@ -18,13 +18,21 @@
     lldb
     nixpkgs-fmt
     cmake
+    gnumake
     rust-analyzer
-    conan
     ninja
+    nix-index
     yarn
     discord
     vlc
+    opam
   ];
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode.fhs;
+  };
+
   dconf.enable = true;
   dconf.settings = {
     # Set dark mode with `gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark`
